@@ -1,5 +1,4 @@
-import CollectionList from "@/components/collection/CollectionList";
-import RouteModal from "@/components/modals/RouteModal"
+import CollectionListModal from "@/components/collection/CollectionListModal";
 import { ICollection } from "@/lib/types/collection";
 
 async function getCollection({ id }: { id: string }) {
@@ -12,9 +11,5 @@ export default async function CollectionModal({ params }: { params: { id: string
   const { id } = params;
   const data = await getCollection({ id });
 
-  return <>
-    <RouteModal>
-      <CollectionList collection={data} />
-    </RouteModal>
-  </>;
+  return (<CollectionListModal collection={data} />);
 }

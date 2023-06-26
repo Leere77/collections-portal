@@ -1,8 +1,6 @@
-export default async function User({ children, profile }: { children: React.ReactNode, modal: React.ReactNode, profile: React.ReactNode }) {
-
-  return <>
-    <h2>User page</h2>
+export default function User({ children }: { children: React.ReactNode }) {
+  return (<div>
+    <h2 className="font-bold text-xl">User page</h2>
     {children}
-    {profile}
-  </>
+  </div>)
 }
