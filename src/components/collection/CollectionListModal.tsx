@@ -1,21 +1,16 @@
-"use client";
+import CollectionList from "@/components/collection/CollectionList";
+import CollcetionHeader from "@/components/collection/CollectionHeader";
+import RouteModal from "@/components/modals/RouteModal";
 
-import { useState } from "react";
-import Modal from "../modals/Modal";
-import CollectionList from "./CollectionList";
 import { ICollection } from "@/lib/types/collection";
-import { useRouter } from "next/navigation";
 
-export default function CollectionListModal({ collection }: { collection: ICollection }) {
-  const [isActive, setIsActive] = useState(true);
-  const router = useRouter();
+export default function CollectionListModal({ collection, id }: { collection: ICollection, id: string }) {
+  const { title, description } = collection;
 
-  const handleOnClose = () => {
-    setIsActive(false);
-    router.back();
-  }
-
-  return (<Modal isActive={isActive} onClose={handleOnClose}>
-    <CollectionList collection={collection} />
-  </Modal>)
+  return (
+    <RouteModal>
+      <CollcetionHeader id={id} title={title} description={description} />
+      <CollectionList collection={collection} />
+    </RouteModal>
+  );
 }

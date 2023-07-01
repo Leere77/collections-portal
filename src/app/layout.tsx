@@ -1,6 +1,9 @@
-import { IHeaderLink } from '@/components/header/types';
-import './globals.css'
 import Header from '@/components/header/Header';
+
+import { IHeaderLink } from '@/components/header/types';
+
+import './globals.css'
+import Providers from './providers';
 
 export const metadata = {
   title: 'Create Next App',
@@ -27,10 +30,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </head>
       <body>
-        <Header links={links} />
-        <main className="container p-4 mx-auto">{children}</main>
-        {collectionModal}
+        <Providers>
+          <Header links={links} />
+          <main className="container p-4 mx-auto">{children}</main>
+          {collectionModal}
+        </Providers>
       </body>
     </html>
   )

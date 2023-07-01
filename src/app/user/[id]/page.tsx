@@ -12,8 +12,10 @@ export default async function User({ params }: { params: { id: string } }) {
 
   const { collections, name } = await getUser({ id });
 
-  return (<div>
-    <p>Collections:</p>
-    {collections.map(({ _id, title }) => <Link key={_id} href={`/collection/${_id}`}>{title}</Link>)}
-  </div>)
+  return (
+    <div>
+      <p>Collections:</p>
+      {collections.map(({ _id, title }) => <Link key={_id} href={`/collection/${_id}`}>{title}</Link>)}
+    </div>
+  );
 }

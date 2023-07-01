@@ -1,14 +1,16 @@
-export enum ECollectionType {
-  Books,
-  Manga,
-  Movie,
-  Series,
+export enum ECollectionItemType {
+  Books = "books",
+  Manga = "mangs",
+  Movie = "moovie",
+  Series = "series",
 }
 
 export interface ICollectionItem {
   _id: string;
   title: string;
+  authors: string[];
   imageUrl?: string;
+  type: ECollectionItemType;
 }
 
 export interface ICollection {
@@ -16,6 +18,5 @@ export interface ICollection {
   owner: string;
   title: string;
   description?: string;
-  type: ECollectionType;
   items: ICollectionItem[];
 }
