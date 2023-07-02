@@ -1,8 +1,9 @@
 export enum ECollectionItemType {
-  Books = "books",
-  Manga = "mangs",
-  Movie = "moovie",
-  Series = "series",
+  Books = "Books",
+  Manga = "Manga",
+  Movie = "Movie",
+  Series = "Series",
+  Anime = "Anime",
 }
 
 export interface ICollectionItem {
@@ -20,3 +21,5 @@ export interface ICollection {
   description?: string;
   items: ICollectionItem[];
 }
+
+export interface ICollectionItemDraft extends Omit<ICollectionItem, "_id"> {}

@@ -5,7 +5,6 @@ import NewCollectionItem from "@/components/collection/NewCollectionItem";
 import CollectionItemWrapper from "@/components/collection/CollectionItemWrapper";
 
 import { ICollection } from "@/lib/types/collection";
-import { AddIcon } from "@chakra-ui/icons";
 
 export default function CellectionList({ collection, isEdit }: { collection: ICollection, isEdit?: boolean }) {
   const { items, _id } = collection;

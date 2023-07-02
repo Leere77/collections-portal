@@ -1,9 +1,8 @@
 import Modal from "@/components/modals/Modal";
-
-import { AddIcon } from "@chakra-ui/icons";
-import { CloseButton } from "@chakra-ui/react";
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
-import NewCollectionItemForm from "./NewCollectionItemForm";
+import NewCollectionItemForm from "@/components/collection/NewCollectionItemForm";
 
 export default function NewCollectionItem({ collectionId }: { collectionId: string }) {
   const [isActive, setIsActive] = useState(false);
@@ -22,7 +21,7 @@ export default function NewCollectionItem({ collectionId }: { collectionId: stri
       </div>
       <Modal isActive={isActive} onClose={handleOnClose}>
         <div className="flex justify-end">
-          <CloseButton onClick={handleOnClose} size='sm' />
+          <CloseIcon onClick={handleOnClose} />
         </div>
         <NewCollectionItemForm collectionId={collectionId} />
       </Modal>

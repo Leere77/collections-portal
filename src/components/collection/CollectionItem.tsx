@@ -1,19 +1,9 @@
 "use client";
 
+import ConfirmPopover from "@/components/popover/ConfirmPopover";
 import { ICollectionItem } from "@/lib/types/collection";
-import { DeleteIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  Image,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  Tooltip
-} from "@chakra-ui/react";
+import { IconButton, Tooltip } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function CollectionItem({ item, isEdit }: { item: ICollectionItem, isEdit?: boolean }) {
   const { title, imageUrl, authors } = item;
@@ -40,32 +30,29 @@ export default function CollectionItem({ item, isEdit }: { item: ICollectionItem
         backdropFilter: 'blur(100px)',
         WebkitBackdropFilter: 'blur(100px)',
       }} /> */}
-      {imageUrl && <Image
+      {imageUrl && <img
         className="mx-auto mb-4 rounded-lg h-40"
         src={imageUrl}
         alt={title}
       />}
       <p className="font-bold">{title}</p>
       <p className="text-sm font-light italic">{authors.map((author) => author)}</p>
-      <div>{isEdit && (
-        <Popover>
-          <PopoverTrigger>
-            <button className="cursor-pointer absolute top-4 right-4">
-              <Tooltip label="Delete" aria-label='Delete'>
-                <DeleteIcon />
-              </Tooltip>
-            </button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>Confirmation</PopoverHeader>
-            <PopoverBody>
-              <p>Are you shure, that you want to delete this item?</p>
-              <Button colorScheme='red' variant='outline' className="mt-4">Delete</Button>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
-      )}</div>
+      {isEdit && (
+        <div className="absolute top-4 right-4">
+          <ConfirmPopover
+            title="Confirmation"
+            description="Are you shure, that you want to delete this item?"
+            buttonText="Delete"
+            buttonProps={{ color: 'error' }}
+          >
+            <Tooltip title="Delete">
+              <IconButton aria-label="delete" size="small">
+                <DeleteIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+
+          </ConfirmPopover>
+        </div>
+      )}
     </>);
 }

@@ -1,26 +1,9 @@
 "use client";
 
+import ConfirmPopover from "@/components/popover/ConfirmPopover";
 import { ICollection } from "@/lib/types/collection";
-import {
-  FormControl,
-  FormLabel,
-  FormHelperText,
-  Input,
-  Textarea,
-  Stack,
-  Container,
-  Button,
-  Center,
-  FormErrorMessage,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger
-} from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { Box, Button, Container, FormControl, Stack, TextField } from "@mui/material";
+import { Controller, useForm } from "react-hook-form";
 
 interface INewCollectionForm {
   title: string,
@@ -30,7 +13,7 @@ interface INewCollectionForm {
 export default function CollectionForm({ collection }: { collection?: ICollection }) {
   const { title = '', description = '' } = collection ?? {};
 
-  const { register, handleSubmit, setError, formState: { errors, dirtyFields } } = useForm<INewCollectionForm>({
+  const { control, handleSubmit, setError, formState: { errors, dirtyFields } } = useForm<INewCollectionForm>({
     defaultValues: {
       title,
       description
@@ -45,41 +28,55 @@ export default function CollectionForm({ collection }: { collection?: ICollectio
   const hasNoChanges = !Object.keys(dirtyFields).length;
 
   return (
-    <Container>
+    <Container maxWidth="sm">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={8}>
-          <FormControl isInvalid={!!titleError} >
-            <FormLabel>Collection title</FormLabel>
-            <Input {...register('title')} required maxLength={100} placeholder="Title" />
-            {titleError ?
-              <FormErrorMessage>{titleError}</FormErrorMessage> :
-              <FormHelperText>This is a public info. Max length 100 symbols.</FormHelperText>
-            }
+        <Stack spacing={4} alignItems="center">
+          <FormControl fullWidth>
+            <Controller
+              control={control}
+              name="title"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="title"
+                  label="Collection title"
+                  helperText={titleError ? titleError : "This is a public info. Max length 100 symbols."}
+                  required
+                  error={!!titleError}
+                  inputProps={{ maxLength: 100 }}
+                />
+              )}
+            />
           </FormControl>
-          <FormControl>
-            <FormLabel>Collection description</FormLabel>
-            <Textarea {...register('description')} maxLength={1000} placeholder="Description" />
-            <FormHelperText>This is a public info. Max length 1000 symbols.</FormHelperText>
+          <FormControl fullWidth>
+            <Controller
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  multiline
+                  id="description"
+                  label="Collection description"
+                  helperText="This is a public info. Max length 1000 symbols."
+                  inputProps={{ maxLength: 1000 }}
+                />
+              )}
+            />
           </FormControl>
-          <Center>
-            <Button type="submit" variant="outline" isDisabled={hasNoChanges}>Save</Button>
-            {collection && (
-              <Popover>
-                <PopoverTrigger>
-                  <Button colorScheme="red" variant="outline" className="ml-4">Delete</Button>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverHeader>Confirmation</PopoverHeader>
-                  <PopoverBody>
-                    <p>Are you shure, that you want to delete this collection?</p>
-                    <Button colorScheme='red' variant='outline' className="mt-4">Delete</Button>
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>)
-            }
-          </Center>
+          <Box display="flex">
+            <Button type="submit" disabled={hasNoChanges}>Save</Button>
+            <ConfirmPopover
+              title="Confirmation"
+              description="Are you sure, that you want to delete this collection?"
+              buttonText="Delete"
+              buttonProps={{ color: 'error' }}
+            >
+              <Button color="error">
+                Delete
+              </Button>
+            </ConfirmPopover>
+          </Box>
         </Stack>
       </form>
     </Container>
